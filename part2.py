@@ -35,14 +35,12 @@ class Genes(Project):
 
 #recording, given a certain biotype as input, the list of associated genes
 class AssociatedGenes(Project):
-
 	def record(self):
 		return df.groupby('gene_biotype')['gene_name'].apply(lambda group_series:group_series.tolist()).to_frame()		#.reset_index()???
 	
 		
 #recording the number of chromosomes in the dataset
 class Chromosomes(Project):
-	
 	def record(self):
 		return len(set(df.loc[:,'chromosome']))
 
@@ -56,22 +54,17 @@ class NumberOfGenes(Project):
 
 class PlusStrand(Project):
 	def record(self):
-		df_tot=df.groupby('chromosome')['chromosome'].count()                  #create a dataframe with chromosomes and number of total genes on the chromosome
-		r=pd.DataFrame(df_tot.items(), columns=['chromosome', 'tot_genes'])    #rename the columns
-		r.sort_values(by=['chromosome'])                                       #put the chromosomes in order
-		t=r.set_index('chromosome')                                            #change the index into the chromosome column
+        df_tot = df.groupby('chromosome')['chromosome'].count()  # create a dataframe with chromosomes and number of total genes on the chromosome
+	df_tot = pd.DataFrame(df_tot.items(), columns=['chromosome', 'tot_genes']).sort_values(by=['chromosome']).set_index('chromosome')  # rename the columns, put the chromosomes in order and change the index into the chromosome column
 
-		df_plus = df[df['strand'] == '+']                                     #select all the rows with minus strand
-		df_pluss=df_plus.groupby('chromosome')['chromosome'].count()         #count how many genes per chromosome
-		p = pd.DataFrame(df_pluss.items(), columns=['chromosome', 'plus_genes']) #change the columns' names
-		p.sort_values(by=['chromosome'])                                       #put the chromosome in order
-		s=p.set_index('chromosome')                                            #change the index into the chromosome column
+	df_plus = df[df['strand'] == '+'].groupby('chromosome')['chromosome'].count()  # select all the rows with plus strand and count how many genes per chromosome
+	df_plus = pd.DataFrame(df_plus.items(), columns=['chromosome', 'plus_genes']).sort_values(by=['chromosome']).set_index('chromosome')  # change the columns' names and put the chromosome in order and change the index into the chromosome column
 
-		t['plus_genes']= s['plus_genes']                                     #create a new column of the first dataframe where pandas associates to each chromosome(index) the value of the second dataframe's column. where pandas doesn't find a corresponding number it writes Nan
-		x=t.reset_index()                                                      #reset index to numbers
-		x['percentage']=x['plus_genes']*100//x['tot_genes']
-		return x
-print(PlusStrand().record())
+	df_tot['plus_genes'] = df_plus['plus_genes']  # create a new column of the first dataframe where pandas associates to each chromosome(index) the value of the second dataframe's column. where pandas doesn't find a corresponding number it writes Nan
+	df_tot = df_tot.reset_index()  # reset index to numbers
+	df_tot['percentage'] = df_tot['plus_genes'] * 100 // df_tot['tot_genes']
+	return df_tot.fillna(0)
+#print(PlusStrand().record())
 
 
 #recording, for each chromosome, the percentage of genes located on the - strand
@@ -81,22 +74,17 @@ print(PlusStrand().record())
 
 class MinusStrand(Project):
 	def record(self):
-		df_tot=df.groupby('chromosome')['chromosome'].count()                  #create a dataframe with chromosomes and number of total genes on the chromosome
-		r=pd.DataFrame(df_tot.items(), columns=['chromosome', 'tot_genes'])    #rename the columns
-		r.sort_values(by=['chromosome'])                                       #put the chromosomes in order
-		t=r.set_index('chromosome')                                            #change the index into the chromosome column
+		df_tot = df.groupby('chromosome')['chromosome'].count()  # create a dataframe with chromosomes and number of total genes on the chromosome
+		df_tot = pd.DataFrame(df_tot.items(), columns=['chromosome', 'tot_genes']).sort_values(by=['chromosome']).set_index('chromosome')  # rename the columns, put the chromosomes in order and change the index into the chromosome column
 
-		df_minus = df[df['strand'] == '-']                                     #select all the rows with minus strand
-		df_minuss=df_minus.groupby('chromosome')['chromosome'].count()         #count how many genes per chromosome
-		p = pd.DataFrame(df_minuss.items(), columns=['chromosome', 'minus_genes']) #change the columns' names
-		p.sort_values(by=['chromosome'])                                       #put the chromosome in order
-		s=p.set_index('chromosome')                                            #change the index into the chromosome column
+		df_minus = df[df['strand'] == '-'].groupby('chromosome')['chromosome'].count()  # select all the rows with minus strand and count how many genes per chromosome
+		df_minus = pd.DataFrame(df_minus.items(), columns=['chromosome', 'minus_genes']).sort_values(by=['chromosome']).set_index('chromosome')  # change the columns' names, put the chromosome in order and change the index into the chromosome column
 
-		t['minus_genes']= s['minus_genes']                                     #create a new column of the first dataframe where pandas associates to each chromosome(index) the value of the second dataframe's column. where pandas doesn't find a corresponding number it writes Nan
-		x=t.reset_index()                                                      #reset index to numbers
-		x['percentage']=x['minus_genes']*100//x['tot_genes']
-		return x
-print(MinusStrand().record())
+		df_tot['minus_genes'] = df_minus['minus_genes']  # create a new column of the first dataframe where pandas associates to each chromosome(index) the value of the second dataframe's column. where pandas doesn't find a corresponding number it writes Nan
+		df_tot = df_tot.reset_index()  # reset index to numbers
+		df_tot['percentage'] = df_tot['minus_genes'] * 100 // df_tot['tot_genes']
+		return df_tot.fillna(0)
+#print(MinusStrand().record())
 
 
 
