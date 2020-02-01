@@ -50,12 +50,11 @@ def result6():
 @app.route('/result7')  
 def result7():
 	result7=PlusStrand().record()
-	return render_template('result7.html', value={'ps': result7})
-
+	return render_template('result7.html', ps=result7.to_html())
 @app.route('/result8')  
 def result8():
 	result8=MinusStrand().record()
-	return render_template('result8.html', value={'ms': result8})	
+	return render_template('result8.html', ms=result8.to_html())	
 
 
 
