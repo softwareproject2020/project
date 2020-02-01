@@ -63,7 +63,7 @@ class PlusStrand(Project):
 	df_tot['plus_genes'] = df_plus['plus_genes']  # create a new column of the first dataframe where pandas associates to each chromosome(index) the value of the second dataframe's column. where pandas doesn't find a corresponding number it writes Nan
 	df_tot = df_tot.reset_index()  # reset index to numbers
 	df_tot['percentage'] = df_tot['plus_genes'] * 100 // df_tot['tot_genes']
-	return df_tot.fillna(0)
+	return df_tot.loc[:, ['chromosome', 'percentage']].fillna(0)
 #print(PlusStrand().record())
 
 
@@ -83,7 +83,7 @@ class MinusStrand(Project):
 		df_tot['minus_genes'] = df_minus['minus_genes']  # create a new column of the first dataframe where pandas associates to each chromosome(index) the value of the second dataframe's column. where pandas doesn't find a corresponding number it writes Nan
 		df_tot = df_tot.reset_index()  # reset index to numbers
 		df_tot['percentage'] = df_tot['minus_genes'] * 100 // df_tot['tot_genes']
-		return df_tot.fillna(0)
+		return df_tot.loc[:, ['chromosome', 'percentage']].fillna(0)
 #print(MinusStrand().record())
 
 
