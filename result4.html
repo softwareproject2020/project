@@ -5,8 +5,9 @@
 	<body>
 		<h1>DATA ANALYSIS</h1>
 		<p>Genes associated to biotypes:</p>
-		<table>
-			{{ ag|safe }}
-		</table>
+		<form action="biotype" method='POST'>
+ 			Enter biotype: <input type='text' name='biotype'>
+ 		<input type='submit' value='Enter'>
+ 		</form>
 	<body/>
 <html/>
