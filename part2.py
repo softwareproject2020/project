@@ -36,7 +36,7 @@ class Genes(Project):
 #recording, given a certain biotype as input, the list of associated genes
 class AssociatedGenes(Project):
 	def record(self):
-		return df.groupby('gene_biotype')['gene_name'].apply(lambda group_series:group_series.tolist()).to_frame()		#.reset_index()???
+		return df.groupby('gene_biotype')['gene_name'].apply(lambda group_series:group_series.tolist()).to_dict()		#.reset_index()???
 	
 		
 #recording the number of chromosomes in the dataset
