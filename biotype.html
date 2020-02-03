@@ -1,0 +1,11 @@
+<html>
+  <body>
+    <p> The genes associated to {{ biotype }} are:
+        {% for key in result4 %}
+            {% if key == biotype %}
+                <p>{{ result4[key] }}</p>
+            {% endif %}
+        {% endfor %}
+    </p>
+  </body>
+</html>
