@@ -32,10 +32,18 @@ def result3():
 	result3=Genes().record()
 	return render_template('result3.html', gn=result3.to_html())
 
-@app.route('/result4')  
+
+@app.route('/result4')
 def result4():
-	result4=AssociatedGenes().record()
-	return render_template('result4.html', ag=result4.to_html())
+	return render_template("result4.html")
+
+@app.route('/biotype', methods=['POST'])
+def biotype_genes():
+    if request.method == 'POST':
+        biotype = request.form['biotype']
+        result4=AssociatedGenes().record()
+    return render_template('biotype.html', **locals())
+
 		
 @app.route('/result5')  
 def result5():
