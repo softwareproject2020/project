@@ -59,28 +59,9 @@ class MinusStrand(Project):
 	def record(self):
 		df_tot = df.groupby('chromosome')['chromosome'].count()  # create a dataframe with chromosomes and number of total genes on the chromosome
 		df_tot = pd.DataFrame(df_tot.items(), columns=['chromosome', 'tot_genes']).sort_values(by=['chromosome']).set_index('chromosome')  # rename the columns, put the chromosomes in order and change the index into the chromosome column
-
 		df_minus = df[df['strand'] == '-'].groupby('chromosome')['chromosome'].count()  # select all the rows with minus strand and count how many genes per chromosome
 		df_minus = pd.DataFrame(df_minus.items(), columns=['chromosome', 'minus_genes']).sort_values(by=['chromosome']).set_index('chromosome')  # change the columns' names, put the chromosome in order and change the index into the chromosome column
-
 		df_tot['minus_genes'] = df_minus['minus_genes']  # create a new column of the first dataframe where pandas associates to each chromosome(index) the value of the second dataframe's column. where pandas doesn't find a corresponding number it writes Nan
 		df_tot = df_tot.reset_index()  # reset index to numbers
 		df_tot['percentage'] = df_tot['minus_genes'] * 100 // df_tot['tot_genes']
 		return df_tot.loc[:, ['chromosome', 'percentage']].fillna(0)
-
-
-
-
-#part1 has to manage these prints
-#a=Number()	#instance:specific obj created from the class Number()
-#print(a.record())
-#a=Semantics()
-#print(a.record())
-#a=Genes()
-#print(a.record())
-#a=AssociatedGenes()
-#print(a.record())
-#a=Chromosomes()
-#print(a.record())
-#a=NumberOfGenes()
-#print(a.record())
