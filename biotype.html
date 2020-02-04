@@ -1,11 +1,11 @@
 <html>
   <body>
-    <p> The genes associated to {{ biotype }} are:
-        {% for key in result4 %}
-            {% if key == biotype %}
-                <p>{{ result4[key] }}</p>
-            {% endif %}
-        {% endfor %}
-    </p>
+    {% if biotype in result4 %}
+		  <p> The genes associated to {{ biotype }} are: {{result4[biotype]}}</p>
+	  {% elif biotype|length == 0%}
+		  <p>Put the input IDIOT!</p>
+	  {% else %}
+		  <p>No genes associated to {{biotype}}</p>
+	  {% endif %}
   </body>
 </html>
