@@ -24,7 +24,7 @@ class Genes(Project):		#recording the number of genes for each biotype. The list
 
 	def record(self):
 		number_genes=df.groupby('gene_biotype')['gene_biotype'].count()		#total number of genes for each biotype
-		return number_genes.sort_values(ascending=True).to_frame().rename(columns={"gene_biotype": "number of genes"}).reset_index()		
+		return number_genes.sort_values(ascending=True).to_frame().rename(columns={"gene_biotype": "number of genes"}).reset_index()	#Pandas Series.to_frame()	
 	
 class AssociatedGenes(Project):		#recording, given a certain biotype as input, the list of associated genes
 
