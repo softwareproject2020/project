@@ -7,8 +7,7 @@
 #but it communicates with the Part 1. Accordingly the Part 1 is responsible for (i) forwarding the request to the 
 #appropriate class/method of Part 2 and (ii) returning the result to the view.
 
-from flask import Flask 
-from flask import render_template
+from flask import Flask, render_template, request
 from part2 import*
 
 app = Flask(__name__)
