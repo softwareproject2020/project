@@ -5,7 +5,7 @@
 	<body>
 		<h1 style="font-family:verdana; border:2px solid Tomato;">DATA ANALYSIS</h1>
 	{% if biotype in result4 %}
-		<p> The genes associated to {{ biotype }} are: <br>{{result4[biotype]}}</p>
+		<p> The genes associated to <b>{{ biotype }}</b> are: <br>{{result4[biotype]}}</p>
 	{% elif biotype|length == 0%}
 		<p style="font-size:30px">Put the input IDIOT!</p>
 	{% else %}
